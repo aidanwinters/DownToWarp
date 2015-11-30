@@ -1,6 +1,8 @@
 #include "Signal.h"
 #include <vector>
 #include <string>
+#include <iostream>
+#include <sstream>
 
 //*
 // Default constructor for Signal class
@@ -41,7 +43,54 @@ std::vector<double> Signal::getSignal()
 //*
 void Signal::readIn(std::string filename)
 {
+	// prep for reading
+	ifstream infile; // input filestream variable for reading
+	infile.open(filename); // open <filename>
+	if( !infile.is_open() ) // in case of error
+	{
+		std::cerr << "Error: cannot open file: " << filename;
+		exit(1);
+	}
 
+	// prepare theInput
+	for( int i = 0; i < size; i++ )
+	{
+		theInput.push_back(std::vector<double>); // create a vector for each data type			
+	}
+
+	// reading logistics
+	std::string currentLine;
+	std::stringstream ss;
+
+	// this next part assumes size=17 so will need to be updated if there are additional/different data types
+	double acc_x, acc_y, acc_z, gyr_x, gyr_y, gyr_z, roll, pitch, yaw, emg_1, emg_2, emg_3, emg_4, emg_5, emg_6, emg_7, emg_8;
+	
+	while( infile.good() )
+	{
+		infile.getline(currentLine);
+		ss.str(currentLine);
+		ss >> acc_x >> acc_y >> acc_z >> gyr_x >> gyr_y >> gyr_z >> roll >> pitch >> yaw;
+		ss >> emg_1 >> emg_2 >> emg_3 >> emg_4 >> emg_5 >> emg_6 >> emg_7 >> emg_8;
+		// add to theInput
+		theInput[0].push_back(acc_x);
+		theInput[1].push_back(acc_y);
+		theInput[2].push_back(acc_z);
+		theInput[3].push_back(gyr_x);
+		theInput[4].push_back(gyr_y);
+		theInput[5].push_back(gyr_z);
+		theInput[6].push_back(roll);
+		theInput[7].push_back(pitch);
+		theInput[8].push_back(yaw);
+		theInput[9].push_back(emg_1);
+		theInput[10].push_back(emg_2);
+		theInput[11].push_back(emg_3);
+		theInput[12].push_back(emg_4);
+		theInput[13].push_back(emg_5);
+		theInput[14].push_back(emg_6);
+		theInput[15].push_back(emg_7);
+		theInput[16].push_back(emg_8);
+	}
+	return;		
 }
 
 //*
