@@ -12,6 +12,8 @@ DTW::DTW(vector< double > one, vector<double> two)
 	seqOne = one;
 	seqTwo = two;
 
+	//added a comment
+
 	lengthOne = seqOne.size();
 	lengthTwo = seqTwo.size();
 
