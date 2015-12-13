@@ -69,7 +69,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     //This loop will form the signal on the Xaxis
     for(int i = 1; i < vectorX.size(); i++)
     {
-        adjYvalue = (adjSignalLengthY + 105) - (50*(vectorX[0]));
+        adjYvalue = (adjSignalLengthY + 105) - (50*(vectorX[i]));
         secondPoint.setX(coordinateX);
         secondPoint.setY(adjYvalue);
 
@@ -218,6 +218,8 @@ void MainWindow::paintEvent(QPaintEvent *e)
             mainPoint2.setY(Yposition);
 
             painter.drawLine(mainPoint1, mainPoint2);
+
+            mainPoint1 = mainPoint2;
         }
         else if(mainVector[z] < 0)
         {
@@ -228,6 +230,8 @@ void MainWindow::paintEvent(QPaintEvent *e)
             mainPoint2.setY(Yposition);
 
             painter.drawLine(mainPoint1, mainPoint2);
+
+            mainPoint1 = mainPoint2;
         }
         else
         {
@@ -239,6 +243,8 @@ void MainWindow::paintEvent(QPaintEvent *e)
             mainPoint2.setY(Yposition);
 
             painter.drawLine(mainPoint1, mainPoint2);
+
+            mainPoint1 = mainPoint2;
         }
     }
 
