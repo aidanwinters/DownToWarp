@@ -1,8 +1,13 @@
 #include "Signal.h"
 #include <vector>
+#include <cstdlib>
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
+
+using namespace std;
+
 
 //*
 // Default constructor for Signal class
@@ -12,15 +17,17 @@ Signal::Signal()
 	size = 17; // number of data types
 }
 
+
 //*
 // Constructor for Signal class: with <filename> given
 //*
-Signal::Signal(std::string filename)
+Signal::Signal(string filename)
 {
 	size = 17; // number of data types
 	readIn( filename ); // read from <filename> and fill theInput
 	finalize(); // construct theSignal from theInput
 }
+
 
 //*
 // Destructor for Signal class
@@ -30,6 +37,7 @@ Signal::~Signal()
 	// no dynamic allocation in class data, so nothing to do here
 }
 
+
 //*
 // Accessor method for the signal
 //*
@@ -38,24 +46,25 @@ std::vector<double> Signal::getSignal()
 	return theSignal;
 }
 
+
 //*
 // Reads from <filename> to access and store original data
 //*
-void Signal::readIn(std::string filename)
+void Signal::readIn(string filename)
 {
 	// prep for reading
-	ifstream infile; // input filestream variable for reading
-	infile.open(filename); // open <filename>
+	std::ifstream infile; // input filestream variable for reading
+	infile.open(filename.c_str()); // open <filename>
 	if( !infile.is_open() ) // in case of error
 	{
-		std::cerr << "Error: cannot open file: " << filename;
-		exit(1);
+		std::cerr << "Error: cannot open file: " << filename << std::endl;
+		std::exit(1);
 	}
 
 	// prepare theInput
 	for( int i = 0; i < size; i++ )
 	{
-		theInput.push_back(std::vector<double>); // create a vector for each data type			
+		theInput.push_back(std::vector<double>()); // create a vector for each data type			
 	}
 
 	// reading logistics
@@ -67,7 +76,8 @@ void Signal::readIn(std::string filename)
 	
 	while( infile.good() )
 	{
-		infile.getline(currentLine);
+		std::getline(infile, currentLine);
+		ss.clear();
 		ss.str(currentLine);
 		ss >> acc_x >> acc_y >> acc_z >> gyr_x >> gyr_y >> gyr_z >> roll >> pitch >> yaw;
 		ss >> emg_1 >> emg_2 >> emg_3 >> emg_4 >> emg_5 >> emg_6 >> emg_7 >> emg_8;
@@ -93,18 +103,41 @@ void Signal::readIn(std::string filename)
 	return;		
 }
 
+
 //*
 // Normalizes one vector to [0,1]
 //*
 void Signal::normalize(std::vector<double>& a)
 {
+	double min = a[0];
+	double max = a[0];
 
+        for( int i = 0; i < a.size(); i++ )
+	{
+		if( a[i] < min )
+			min = a[i];
+		if( a[i] > max )
+			max = a[i];
+	}
+
+	for( int i = 0; i < a.size(); i++ )
+	{
+		a[i] = (a[i]-min)/(max - min);
+	}
+
+	return;	
 }
+
 
 //*
 // Constructs the signal from the original data
 //*
 void Signal::finalize()
 {
-
+	for( int i = 0; i < theInput.size(); i++ )
+	{
+		normalize( theInput[i] );
+		for( int j = 0; j < theInput[i].size(); j++ )
+			theSignal.push_back(theInput[i][j]);
+	} 
 }
