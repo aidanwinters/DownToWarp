@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     {
         Signal Sx = new Signal(argv[1]);
         Signal Sy = new Signal(argv[2]);
-        DTW main = new DTW(Sx, Sy);
+        DTW main = new DTW(Sx, Sy, -1);
 
         vectorX = Sx.getSignal();
         vectorY = Sy.getSignal();
