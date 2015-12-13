@@ -10,15 +10,21 @@ class DTW{
 
 	public:
 		DTW();
-		DTW(vector<double> one, vector<double> two);
+		DTW(vector<double> one, vector<double> two, int window);
 		~DTW();
-
+		
+		/*
+ 		*This method returns a vector containing integers indicating the directions for the calculated DTW
+ 		*/
+		vector<int> getDirections(){ return directions; };
+		
 	private:
 		vector< int > directions;
 		vector< double > seqOne;
 		vector< double > seqTwo;
 		int lengthOne;
 		int lengthTwo;
+		int windowSize;
 	
 		static const double MAX = DBL_MAX;
 
@@ -26,12 +32,12 @@ class DTW{
 		 * This method will calculate the similarity between two sequences 
 		 *using the dynamic time warping algorithm
 		 */
-		void DTWDistance( int window );	
+		void DTWDistance();	
 	
 		/*
 		 * This method calculates the distance between two points in the sequence 
 		 */
-		double distance(double aY, int aX, double bY, int bX );
+		double distance(double a, double b);
 		
 		/*
  		*This method wil simply return the max of two ints
@@ -57,6 +63,11 @@ class DTW{
 		 * Returns the absolute value of the given integer
 		 */
 		int absVal(int x);
+
+		/*
+		 * This method iterates back through the matrix and produces a vector containing the directions
+		 */
+		void findDirections(vector< vector<double> > matrix);
 };
 
 

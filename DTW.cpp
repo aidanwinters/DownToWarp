@@ -1,23 +1,23 @@
 #include "DTW.h"
 #include <iostream>
-#include <cmath>
-
 
 using namespace std;
 
 DTW::DTW(){}
 
-DTW::DTW(vector< double > one, vector<double> two)
+DTW::DTW(vector< double > one, vector<double> two, int window)
 {
 	seqOne = one;
 	seqTwo = two;
 
-	//added a comment
-
 	lengthOne = seqOne.size();
 	lengthTwo = seqTwo.size();
 
-	DTWDistance(200);
+	if(window < 0){
+		windowSize = maxINT(lengthOne, lengthTwo);	
+	}
+	
+	DTWDistance();
 }
 
 DTW::~DTW(){}
@@ -26,10 +26,10 @@ DTW::~DTW(){}
 * This method will calculate the similarity between two sequences 
 *using the dynamic time warping algorithm
 */
-void DTW::DTWDistance( int window )
+void DTW::DTWDistance()
 {
 		int diff = lengthOne - lengthTwo;
-		int w = maxINT( window, absVal(diff));					
+		int w = maxINT( windowSize, absVal(diff));					
 
 		double init = MAX;
 
@@ -38,60 +38,36 @@ void DTW::DTWDistance( int window )
 		matrix[0][0] = 0;
 
 		for(int i = 1; i <= lengthOne; i++){
-
-			cout << "AT least i got to here" << endl;
-			
+	
 			int jStart = maxINT(1, i - w);
 			int jEnd = minINT(lengthTwo, i + w); 	
-
-			cout << "fuck " << jStart << endl;		
-			cout << "fuck2 " << jEnd << endl;		
 	
 			for(int j = jStart; j <= jEnd; j++){
 	
-				cout << "AT least i got to here 2" << endl;
-					
-				double cost = distance(seqOne[i-1], i-1, seqTwo[j-i], j-1);
-					
+				double cost = distance(seqOne[i-1], seqTwo[j-1]);
+		
 				double both = matrix[i-1][j-1];
 				double first = matrix[i-1][j];
 				double second = matrix[i][j-1];
 
 				double minimum = minDBL(both, minDBL(first, second));
-
-				if(minimum == both){
-					directions.push_back(0); //match
-				}
-				else if(minimum == first){
-					directions.push_back(1); //insertion
-				}
-				else if(minimum == second){
-					directions.push_back(-1); //deletion
-				}
 				
 				matrix[i][j] = cost + minimum;
-
 			}
 		}
-
+		
+		findDirections(matrix);
+	printMatrix(matrix);
 	cout << matrix[lengthOne][lengthTwo] << endl;
-	cout << directions.size() << endl;	
 }
 
 /*
 * This method calculates the distance between two points in the sequence 
 */
-double DTW::distance(double aY, int aX, double bY, int bX )
+double DTW::distance(double a, double b)
 {
-	double xPart = bX - aX;
-	double yPart = bY - aY;
-
-	double xPartSqrd = xPart * xPart; 
-	double yPartSqrd = yPart * yPart; 
-
-	double xAndY = xPartSqrd + yPartSqrd;
-
-	return sqrt(xAndY);
+	double result = a - b;
+	return result * result;	
 }
 
 
@@ -133,13 +109,14 @@ double DTW::minDBL( double a, double b )
 */	
 void DTW::printMatrix( vector< vector<double> > matrix){
 
-		for(int i = 0; i < lengthOne; i++){
-			for(int j = 0; j< lengthTwo; j++){
+		for(int i = 0; i < lengthOne + 1; i++){
+			for(int j = 0; j< lengthTwo + 1; j++){
 				cout << "|" << 	matrix[i][j] << "|";
 			}
 			cout << endl;
 		}	
 }
+
 /*
  *This method returns the absolute value of the provided int
  */			
@@ -148,4 +125,48 @@ int DTW::absVal(int x){
 		return x - (2 * x);		
 	}
 	return x;
+}
+
+/*
+* This method iterates back through the matrix and produces a vector containing the directions
+*/
+void DTW::findDirections(vector< vector<double> > matrix){
+		
+	int i = lengthOne;
+	int j = lengthTwo;
+
+	vector<int> temp;
+
+	while( i > 0 && j > 0){
+				
+				double both = matrix[i-1][j-1];
+				double first = matrix[i-1][j];
+				double second = matrix[i][j-1];
+
+				double minimum = minDBL(both, minDBL(first, second));
+
+				if(minimum == both){
+					temp.push_back(0); //match
+					i--;
+					j--;
+					cout << "HERE I AM1" << endl;
+				}
+				else if(minimum == first){
+					temp.push_back(1); //insertion
+					i--;
+					cout << "HERE I AM2" << endl;
+				}
+				else if(minimum == second){
+					temp.push_back(-1); //deletion
+					j--;
+					cout << "HERE I AM3" << endl;
+				}	
+
+	}
+
+	//reverse the vector
+	for(int k = temp.size(); k >= 0; k--){
+		directions.push_back(temp[k]);
+	}
+
 }
