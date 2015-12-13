@@ -37,8 +37,6 @@ void DTW::DTWDistance( int window )
 	
 		matrix[0][0] = 0;
 
-		printMatrix(matrix);
-
 		for(int i = 1; i <= lengthOne; i++){
 
 			cout << "AT least i got to here" << endl;
@@ -72,11 +70,12 @@ void DTW::DTWDistance( int window )
 				}
 				
 				matrix[i][j] = cost + minimum;
+
 			}
 		}
 
+	cout << matrix[lengthOne][lengthTwo] << endl;
 	cout << directions.size() << endl;	
-	printMatrix(matrix);	
 }
 
 /*

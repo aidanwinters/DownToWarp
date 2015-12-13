@@ -6,6 +6,8 @@
 #include <sstream>
 #include <fstream>
 
+using namespace std;
+
 
 //*
 // Default constructor for Signal class
@@ -19,7 +21,7 @@ Signal::Signal()
 //*
 // Constructor for Signal class: with <filename> given
 //*
-Signal::Signal(char* filename)
+Signal::Signal(string filename)
 {
 	size = 17; // number of data types
 	readIn( filename ); // read from <filename> and fill theInput
@@ -48,11 +50,11 @@ std::vector<double> Signal::getSignal()
 //*
 // Reads from <filename> to access and store original data
 //*
-void Signal::readIn(char* filename)
+void Signal::readIn(string filename)
 {
 	// prep for reading
 	std::ifstream infile; // input filestream variable for reading
-	infile.open(filename); // open <filename>
+	infile.open(filename.c_str()); // open <filename>
 	if( !infile.is_open() ) // in case of error
 	{
 		std::cerr << "Error: cannot open file: " << filename << std::endl;

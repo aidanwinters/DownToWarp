@@ -4,11 +4,13 @@
 #include <vector>
 #include <string>
 
+using namespace std;
+
 class Signal{
 
 	public:
 		Signal();
-		Signal(char* filename);
+		Signal(string filename);
 		~Signal();
 	 	std::vector<double> getSignal();	
 
@@ -21,7 +23,7 @@ class Signal{
 		std::vector<double> theSignal; // one dimensional array to hold the output data, all normalized and in order. 
 
 		// methods
-		void readIn(char* filename); // will read from <filename> and fill theInput accordingly
+		void readIn(string filename); // will read from <filename> and fill theInput accordingly
 		void normalize(std::vector<double>& a); // will normalize one vector to [0,1]
 		void finalize(); // will construct theSignal 
 
