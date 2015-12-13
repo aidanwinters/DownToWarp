@@ -108,7 +108,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     painter.setPen(scalepen);
 
     double IncNum = 0;
-    int labelNum = 0;
+    double labelNum = 0;
     QString label;
 
     //This while loop will create the appropriate number of scale bars for the x-axis
@@ -148,7 +148,15 @@ void MainWindow::paintEvent(QPaintEvent *e)
         IncNum = IncNum + 10;
         painter.drawLine(scalePointX1,scalePointX2);
     }
+    
+    label = 1.0
+    label = QString::number(labelNum);
+    painter.drawText(QPointF(95, (adjSignalLengthY + 57.5), label);
 
+    label = 0.0
+    label = QString::number(labelNum);
+    painter.drawText(QPointF(95, (adjSignalLengthY + 102.5)), label);
+    
     QPointF scalePointY1;
     QPointF scalePointY2;
 
@@ -194,6 +202,14 @@ void MainWindow::paintEvent(QPaintEvent *e)
         IncNum = IncNum + 10;
         painter.drawLine(scalePointY1,scalePointY2);
     }
+
+    label = 1.0
+    label = QString::number(labelNum);
+    painter.drawText(QPointF(52.5, 25, label);
+
+    label = 0.0
+    label = QString::number(labelNum);
+    painter.drawText(QPointF(97.5, 25), label);
 
     double Xposition = 120;
     double Yposition = adjSignalLengthY + 40;
