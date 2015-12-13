@@ -58,7 +58,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     double coordinateX = 115;
 
     //Create and initialize the points that will draw each signal
-    int adjYvalue = (50*(vectorX[0])) + (adjSignalLengthY + 105);
+    int adjYvalue = (adjSignalLengthY + 105) - (50*(vectorX[0]));
 
     QPointF firstPoint;
     firstPoint.setX(coordinateX);
@@ -67,9 +67,9 @@ void MainWindow::paintEvent(QPaintEvent *e)
     QPointF secondPoint;
 
     //This loop will form the signal on the Xaxis
-    for(int i = 1; i < SignalLengthX; i++)
+    for(int i = 1; i < vectorX.size(); i++)
     {
-        adjYvalue = (50*(vectorX[i])) + (adjSignalLengthY + 105);
+        adjYvalue = (adjSignalLengthY + 105) - (50*(vectorX[0]));
         secondPoint.setX(coordinateX);
         secondPoint.setY(adjYvalue);
 
@@ -86,7 +86,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     firstPoint.setY(coordinateY);
 
     //This loop will form the signal on the Yaxis
-    for(int i = 1; i < SignalLengthY; i++)
+    for(int i = 1; i < vectorY.size(); i++)
     {
         adjXvalue = 100 - (50*(vectorY[i]));
         secondPoint.setX(adjXvalue);
@@ -196,7 +196,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     }
 
     double Xposition = 120;
-    double Yposition = adjSignalLengthY - 40;
+    double Yposition = adjSignalLengthY + 40;
 
     QPointF mainPoint1;
     mainPoint1.setX(Xposition);
@@ -212,7 +212,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
         if(mainVector[z] > 0)
         {
             //move vertically
-            Yposition = Yposition + CONST_TRANS;
+            Yposition = Yposition - CONST_TRANS;
 
             mainPoint2.setX(Xposition);
             mainPoint2.setY(Yposition);
@@ -233,7 +233,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
         {
             //move diagonally
             Xposition = Xposition + CONST_TRANS;
-            Yposition = Yposition + CONST_TRANS;
+            Yposition = Yposition  - CONST_TRANS;
 
             mainPoint2.setX(Xposition);
             mainPoint2.setY(Yposition);

@@ -8,19 +8,13 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = proj3
+TARGET = DTW_GUI
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp\
-	Signal.cpp\
-	DTW.cpp\
-	moc_mainwindow.cpp
-	
-HEADERS  += mainwindow.h\
-	DTW.h\
-	Signal.h\
-	ui_mainwindow.h
+        mainwindow.cpp
+
+HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui

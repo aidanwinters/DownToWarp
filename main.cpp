@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <vector>
-#include <iostream>
 #include "Signal.h"
 #include "DTW.h"
 
@@ -18,14 +17,13 @@ int main(int argc, char *argv[])
     }
     else
     {
-        Signal* Sx = new Signal(argv[1]);
-        Signal* Sy = new Signal(argv[2]);
-        //DTW main = new DTW(Sx, Sy, -1);
+        Signal Sx = new Signal(argv[1]);
+        Signal Sy = new Signal(argv[2]);
+        DTW main = new DTW(Sx, Sy);
 
-        vectorX = Sx->getSignal();
-        vectorY = Sy->getSignal();
-	DTW* main = new DTW(vectorX, vectorY, -1);
-        mainVector = main->getDirections();
+        vectorX = Sx.getSignal();
+        vectorY = Sy.getSignal();
+        mainVector = main.getDirections();
     }
 
     QApplication a(argc, argv);
