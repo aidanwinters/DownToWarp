@@ -162,7 +162,7 @@ void MainWindow::paintEvent(QPaintEvent *e)
     while(SignalLengthY >= 0)
     {
         scalePointY1.setX(50);
-        scalePointY1.setY(IncNum + 60);
+        scalePointY1.setY((adjSignalLengthY + 40) - IncNum);
 
         scalePointY2.setX(45);
         scalePointY2.setY(IncNum + 60);
