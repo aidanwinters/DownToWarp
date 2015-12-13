@@ -57,7 +57,7 @@ void DTW::DTWDistance()
 		}
 		
 		findDirections(matrix);
-	printMatrix(matrix);
+       //	printMatrix(matrix);
 	cout << matrix[lengthOne][lengthTwo] << endl;
 }
 
