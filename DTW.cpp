@@ -149,17 +149,17 @@ void DTW::findDirections(vector< vector<double> > matrix){
 					temp.push_back(0); //match
 					i--;
 					j--;
-					cout << "HERE I AM1" << endl;
+					//cout << "HERE I AM1" << endl;
 				}
 				else if(minimum == first){
 					temp.push_back(1); //insertion
 					i--;
-					cout << "HERE I AM2" << endl;
+					//cout << "HERE I AM2" << endl;
 				}
 				else if(minimum == second){
 					temp.push_back(-1); //deletion
 					j--;
-					cout << "HERE I AM3" << endl;
+					//cout << "HERE I AM3" << endl;
 				}	
 
 	}
