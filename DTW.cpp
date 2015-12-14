@@ -23,22 +23,47 @@ DTW::DTW(vector< double > one, vector<double> two, int window)
 DTW::~DTW(){}
 
 /*
+*This method is only meant to be used for running multiple DTWs for testing
+*/
+void runDTW(vector<double> one, vector<double> two, int window)
+{
+	seqOne = one;
+	seqTwo = two;
+
+	lengthOne = seqOne.size();
+	lengthTwo = seqTwo.size();
+
+	if(window < 0){
+		windowSize = maxINT(lengthOne, lengthTwo);	
+	}
+	
+	DTWDistance();
+}
+
+
+/*
 * This method will calculate the similarity between two sequences 
 *using the dynamic time warping algorithm
 */
 void DTW::DTWDistance()
 {
 		int diff = lengthOne - lengthTwo;
+		
+		//set window size
 		int w = maxINT( windowSize, absVal(diff));					
 
+		//value to set for all entries in the matrix
 		double init = MAX;
 
+		//set the values in the matrix
 		vector< vector < double > > matrix( lengthOne + 1, vector<double>(lengthTwo + 1, init)); //added one row and col to compensate for additional row and col of infinity values
 	
+		//starting value is 0
 		matrix[0][0] = 0;
 
 		for(int i = 1; i <= lengthOne; i++){
 	
+			//find window star and end
 			int jStart = maxINT(1, i - w);
 			int jEnd = minINT(lengthTwo, i + w); 	
 	
@@ -55,10 +80,9 @@ void DTW::DTWDistance()
 				matrix[i][j] = cost + minimum;
 			}
 		}
-		
-		findDirections(matrix);
-       //	printMatrix(matrix);
-		cout << matrix[lengthOne][lengthTwo] << endl;
+	
+		//generate the array of directions	
+		findDirections(matrix); 
 }
 
 /*
