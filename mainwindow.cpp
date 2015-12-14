@@ -149,11 +149,11 @@ void MainWindow::paintEvent(QPaintEvent *e)
         painter.drawLine(scalePointX1,scalePointX2);
     }
     
-    label = 1.0
+    label = 1.0;
     label = QString::number(labelNum);
-    painter.drawText(QPointF(95, (adjSignalLengthY + 57.5), label);
+    painter.drawText(QPointF(95, (adjSignalLengthY + 57.5)), label);
 
-    label = 0.0
+    label = 0.0;
     label = QString::number(labelNum);
     painter.drawText(QPointF(95, (adjSignalLengthY + 102.5)), label);
     
@@ -203,11 +203,11 @@ void MainWindow::paintEvent(QPaintEvent *e)
         painter.drawLine(scalePointY1,scalePointY2);
     }
 
-    label = 1.0
+    label = 1.0;
     label = QString::number(labelNum);
-    painter.drawText(QPointF(52.5, 25, label);
+    painter.drawText(QPointF(52.5, 25), label);
 
-    label = 0.0
+    label = 0.0;
     label = QString::number(labelNum);
     painter.drawText(QPointF(97.5, 25), label);
 
