@@ -17,6 +17,12 @@ class DTW{
  		*This method returns a vector containing integers indicating the directions for the calculated DTW
  		*/
 		vector<int> getDirections(){ return directions; };
+
+		/*
+		 *This method is only meant to be used for running multiple DTWs for testing
+		 */
+		void runDTW(vector<double> one, vector<double> two, int window);
+
 		
 	private:
 		vector< int > directions;
